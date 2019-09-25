@@ -31,14 +31,13 @@ public class BJ1719_Graph_Dijkstra_Delivery_190921 {
 			p[t1].add(new Edge(t2,t3));
 			p[t2].add(new Edge(t1,t3));
 		}
-		int[] c = new int[n+1];
-		int[] d = new int[n+1];
+
 		sol = new int[n+1][n+1];
-		
 		Compare cmp = new Compare();
-		PriorityQueue<Edge> pq = new PriorityQueue<Edge>(1,cmp);
 		for(int i=1; i<=n; i++){
-			pq.clear();
+			int[] c = new int[n+1];
+			int[] d = new int[n+1];
+			PriorityQueue<Edge> pq = new PriorityQueue<Edge>(1,cmp);
 			for(int j=1; j<=n; j++){
 				d[j] = Integer.MAX_VALUE;
 			}
@@ -47,6 +46,8 @@ public class BJ1719_Graph_Dijkstra_Delivery_190921 {
 			while(!pq.isEmpty()){
 				Edge now = pq.poll();
 				int x = now.e;
+				if(c[now.e]==1) continue;
+				c[now.e] = 1;
 				for(Edge next : p[x]){
 					int y = next.e;
 					if(d[y] > d[x]+next.c){
@@ -93,7 +94,7 @@ public class BJ1719_Graph_Dijkstra_Delivery_190921 {
 	
 	static class Compare implements Comparator<Edge>{
 		public int compare(Edge one, Edge two){
-			return Integer.compare(one.c, one.c);
+			return Integer.compare(one.c, two.c);
 		}
 	}
 }
